@@ -1,5 +1,5 @@
-# Provectus-Systems
-API to serve communication between client app and locomotive devices
+# Loco-Web-App
+web application for device status updates
 
 ## Available Scripts
 
