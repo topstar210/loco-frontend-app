@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Status = props => {
-  const {icon, title, comment, quality} = props;
+  const {icon, tflag, title, comment, quality} = props;
   const [status, setStatus] = useState(false);
+
+  useEffect(()=>{
+    setStatus(tflag);
+  },[tflag])
   return <div className="flex flex-col justify-between h-[141.626px] px-[17.38px] pt-[17.38px] pb-[20.62px] rounded-[17.377px] bg-lightdark">
     <div className="flex justify-between">
       <img src={icon} alt="icon" className="w-[21px] h-[21px] mt-[7.36px]" />
       <div className="relative w-10 h-[20.9px] p-[4.34px] rounded-[17.4px] bg-dark-toggle" onClick={() => setStatus(!status)}>
-        <div className={"absolute w-[13px] h-[13px] rounded-full bg-dark-toggle-switch transition-all " + (status ? "right-[21.66px]" : "right-[4.34px]")}></div>
+        <div className={"absolute w-[13px] h-[13px] rounded-full bg-dark-toggle-switch transition-all " + (status ? "right-[4.34px]" : "right-[21.66px]")}></div>
       </div>
     </div>
     <div className="flex justify-between pr-[14px]">

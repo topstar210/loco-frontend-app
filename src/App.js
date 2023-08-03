@@ -14,6 +14,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/device" element={<Layout />}>
           <Route path="/device/details" element={<DeviceDetails />} />
+          <Route path="/device/details/:deviceId" element={<DeviceDetails />} />
           <Route path="/device/search" element={<DeviceSearch />} />
         </Route>
       </Routes>

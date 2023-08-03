@@ -43,8 +43,8 @@ const Sidebar = props => {
               pathname == item.href ? <img src={ActiveTabIcon} alt="active-tab" className="absolute w-[7px] h-8 top-1/2 -translate-y-1/2" /> : ''
             }
             <Link to={item.href} className="flex items-center ml-10" onClick={() => toggleSidebar()}>
-              <img src={item.icon} alt="" className={"w-6 h-6 mr-5" + (pathname !== item.href ? ' opacity-30' : '')} />
-              <span className={(pathname !== item.href ? ' opacity-30' : '')}>{item.title}</span>
+              <img src={item.icon} alt="" className={"w-6 h-6 mr-5" + (pathname.indexOf(item.href) === -1 ? ' opacity-30' : '')} />
+              <span className={(pathname.indexOf(item.href) === -1 ? ' opacity-30' : '')}>{item.title}</span>
             </Link>
           </li>
         ))}
