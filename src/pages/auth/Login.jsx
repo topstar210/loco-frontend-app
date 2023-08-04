@@ -18,6 +18,7 @@ const Login = () => {
 
   // when click the login button
   const handleLogin = () => {
+    localStorage.removeItem('access_token');
     API.auth.login(data).then(res => {
       if (res.data.user !== undefined) {
         localStorage.setItem('access_token', res.data.token);
@@ -30,7 +31,7 @@ const Login = () => {
     <div className="flex h-screen">
       <div className="hidden md:flex w-5/12 h-full bg-maindark bg-auth-aside bg-cover px-10 relative items-center">
         <div className="max-w-[440px] mx-auto">
-          <img src={Logo} className="mx-auto mb-20" alt="logo" />
+          {/* <img src={Logo} className="mx-auto mb-20" alt="logo" /> */}
           <h1 className="text-4xl font-bold my-4">Welcome Back!</h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
           <img src={ProvectusLogo} className="mt-56" alt="logo" />

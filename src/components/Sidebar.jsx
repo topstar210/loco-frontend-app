@@ -30,11 +30,11 @@ const Sidebar = props => {
   ];
 
   return <div className={(open ? "flex" : "hidden") + " absolute md:relative z-10 md:flex flex-col w-[251px] h-screen pb-16 bg-maindark"}>
-    <img
+    {/* <img
       src={Logo}
       alt="logo"
       className="w-[79px] h-[76px] mt-7 ml-[38px] mb-[15px]"
-    />
+    /> */}
     <div className="relative flex flex-col justify-between w-full h-full">
       <ul className="font-semibold text-sm">
         {items.map((item, index) => (

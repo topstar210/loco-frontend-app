@@ -45,7 +45,7 @@ const Details = () => {
   }, []);
 
   return <div className="flex flex-col xl:flex-row xl:justify-between px-4 xl:pl-[38px] xl:pr-11 pt-4 xl:pt-9 pb-4">
-    <div className="shrink-0 w-full md:w-auto mr-9 md:mr-0">
+    <div className="shrink-0 w-full md:w-auto mr-0 lg:mr-9">
       <div className="flex mb-4 lg:mb-8">
         <div className="flex mr-3">
           <div className="flex justify-center items-center w-[51px] h-[51px] rounded-[11.6px] bg-lightdark mr-[11.6px]">
@@ -81,15 +81,15 @@ const Details = () => {
           <div className="flex">
             <div className="mr-[30px]">
               <p className="font-normal text-lightdark-font text-[11.41px] mb-[1px]">GPS</p>
-              <p className="font-semibold text-[14.36px] text-transparent bg-clip-text bg-yellow-text">01</p>
+              <p className="font-semibold text-[14.36px] text-transparent bg-clip-text bg-yellow-text">{ device.gpsCount??0 }</p>
             </div>
             <div className="mr-[35px]">
               <p className="font-normal text-lightdark-font text-[11.41px] mb-[1px]">Cameras</p>
-              <p className="font-semibold text-[14.36px] text-transparent bg-clip-text bg-yellow-text">08</p>
+              <p className="font-semibold text-[14.36px] text-transparent bg-clip-text bg-yellow-text">{ device.cameraCount??0 }</p>
             </div>
             <div>
               <p className="font-normal text-lightdark-font text-[11.41px] mb-[1px]">Microphone</p>
-              <p className="font-semibold text-[14.36px] text-transparent bg-clip-text bg-yellow-text">03</p>
+              <p className="font-semibold text-[14.36px] text-transparent bg-clip-text bg-yellow-text">{ device.microphoneCount??0 }</p>
             </div>
           </div>
         </div>
