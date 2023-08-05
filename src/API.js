@@ -10,6 +10,16 @@ API.interceptors.request.use(config => {
   return config;
 }, error => Promise.reject(error));
 
+API.interceptors.response.use(
+  response => response,
+  error => {
+    console.error(error);
+    window.location.href = '/login';
+    // Handle error here
+    return Promise.reject(error);
+  }
+);
+
 /**
  * Auth
  */
@@ -21,12 +31,19 @@ API.auth = {
 };
 
 /**
- * Users
+ * Devices
  */
 API.devices = {
   all: () => API.get('/device/info/all'),
   show: id => API.get(`/device/info/${id}`),
   deviceUpdate: id => API.get(`/device/status-updates/${id}?start_time=2010-01-01&end_time=2030-01-02`)
 };
+
+/**
+ * Users
+ */
+API.user = {
+  personalInfo: uid => API.get(`/users/${uid}`),
+}
 
 export default API;

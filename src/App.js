@@ -7,6 +7,7 @@ import Login from "./pages/auth/Login"
 import Layout from './components/Layout.jsx';
 import DeviceDetails from './pages/dashboard/Details'
 import DeviceSearch from './pages/dashboard/Search'
+import Profile from './pages/user/Profile'
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
           <Route path="/device/details" element={<DeviceDetails />} />
           <Route path="/device/details/:deviceId" element={<DeviceDetails />} />
           <Route path="/device/search" element={<DeviceSearch />} />
-        </Route>
+        </Route> 
+        <Route path="/user/profile" element={<Profile />}></Route>
       </Routes>
     </div>
   );

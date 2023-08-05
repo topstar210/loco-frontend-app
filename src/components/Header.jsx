@@ -1,5 +1,7 @@
 import React, {useState, useEffect, useRef} from "react";
 import { useNavigate } from "react-router-dom";
+import Modal from "./Modal";
+
 import SearchIcon from "../assets/images/search.svg";
 import HelpIcon from "../assets/images/help.svg";
 import NotificationIcon from "../assets/images/notification.svg";
@@ -12,6 +14,7 @@ const Header = props => {
   const dropWrapperRef = useRef();
   const {toggleSidebar, search, handleChangeSearch} = props;
   const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   // logout func
   const handleLogOut = () => {
@@ -59,7 +62,7 @@ const Header = props => {
           {
             open
               ? <div ref={dropWrapperRef} className="absolute w-32 mt-4 bg-lightdark rounded-[10px] border border-black">
-                <p className="p-2 text-center cursor-pointer border-y border-black" onClick={handleLogOut}>Profile</p>
+                <p className="p-2 text-center cursor-pointer border-y border-black" onClick={()=>setOpenModal(true)}>Profile</p>
                 <p className="p-2 text-center cursor-pointer" onClick={handleLogOut}>Logout</p>
               </div>
               : ''
@@ -67,6 +70,9 @@ const Header = props => {
         </div>
       </div>
     </div>
+    {
+      openModal && <Modal setOpenModal={setOpenModal} />
+    }
 	</div>
 }
 
