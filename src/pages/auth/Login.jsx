@@ -9,8 +9,8 @@ import API from '../../API';
 const Login = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({
-    email: 'user_test@provectussystems.com',
-    password: '123'
+    email: '',
+    password: ''
   });
 
   // handling input change events

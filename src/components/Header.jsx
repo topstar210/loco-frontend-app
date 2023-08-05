@@ -40,7 +40,7 @@ const Header = props => {
           </div>
           {
             open
-              ? <div className="absolute w-32 mt-4 bg-lightdark rounded-[10px]">
+              ? <div className="absolute w-32 mt-4 bg-lightdark rounded-[10px] border-1 border-black">
                 <p className="p-2 text-center cursor-pointer" onClick={handleLogOut}>Logout</p>
               </div>
               : ''
