@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "../assets/images/search.svg";
 import HelpIcon from "../assets/images/help.svg";
@@ -9,12 +9,30 @@ import Menu from "../assets/images/menu.png";
 
 const Header = props => {
   const navigate = useNavigate();
+  const dropWrapperRef = useRef();
   const {toggleSidebar, search, handleChangeSearch} = props;
   const [open, setOpen] = useState(false);
+
+  // logout func
   const handleLogOut = () => {
     localStorage.removeItem('access_token');
     navigate('/');
   }
+
+  // For outside clicking of dropdown menu
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropWrapperRef.current && !dropWrapperRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropWrapperRef]);
+  
 	return <div className="flex flex-col-reverse lg:flex-row justify-between items-center w-full h-auto lg:h-[100px] px-4 py-4 lg:py-0 lg:pl-[38px] lg:pr-12">
     <div className="flex items-center">
       <span className="hidden md:flex font-semibold text-[28px] mr-10">Welcome Max</span>
@@ -40,7 +58,8 @@ const Header = props => {
           </div>
           {
             open
-              ? <div className="absolute w-32 mt-4 bg-lightdark rounded-[10px] border-1 border-black">
+              ? <div ref={dropWrapperRef} className="absolute w-32 mt-4 bg-lightdark rounded-[10px] border border-black">
+                <p className="p-2 text-center cursor-pointer border-y border-black" onClick={handleLogOut}>Profile</p>
                 <p className="p-2 text-center cursor-pointer" onClick={handleLogOut}>Logout</p>
               </div>
               : ''
