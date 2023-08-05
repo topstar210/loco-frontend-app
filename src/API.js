@@ -25,7 +25,8 @@ API.auth = {
  */
 API.devices = {
   all: () => API.get('/device/info/all'),
-  show: id => API.get(`/device/info/${id}`)
+  show: id => API.get(`/device/info/${id}`),
+  deviceUpdate: id => API.get(`/device/status-updates/${id}?start_time=2010-01-01&end_time=2030-01-02`)
 };
 
 export default API;

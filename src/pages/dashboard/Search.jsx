@@ -33,7 +33,7 @@ const DeviceSearch = () => {
 
   useEffect(() => {
     setDevices(allDevices.filter((device) => device.name.toLowerCase().includes(search.toLowerCase())));
-  }, [search]);
+  }, [search, allDevices]);
 
   return <div className="px-4 xl:pl-[38px] xl:pr-11 pt-4 xl:pt-9 pb-4">
     <p className="font-semibold text-[18.246px] mb-5">Frequently Used</p>

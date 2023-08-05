@@ -8,7 +8,7 @@ import { formatDate } from "../../utils";
 import API from '../../API';
 
 import { useParams } from "react-router-dom";
-import { Map } from '@googlemaps/react-wrapper'
+// import { Map } from '@googlemaps/react-wrapper'
 
 const Details = () => {
   const { deviceId } = useParams();
@@ -23,11 +23,16 @@ const Details = () => {
       "gps",
       "mic"
     ],
+    "gps": {
+      "lat": 47.55,
+      "lon": 97.33
+    },
     "name": "Loco Cam 1",
     "lastUpdateTimestamp": "2023-08-03T04:57:40.901000",
     "uptimeMinutes": 36000
   });
 
+  // load first data
   useEffect(() => {
     async function fetchdata() {
       let id;
@@ -40,9 +45,12 @@ const Details = () => {
       API.devices.show(id).then(response => {
         setDevice(response.data);
       });
+      // API.devices.deviceUpdate(id).then(response => {
+      //   setDevice(response.data);
+      // });
     }
     fetchdata();
-  }, []);
+  }, [deviceId]);
 
   return <div className="flex flex-col xl:flex-row xl:justify-between px-4 xl:pl-[38px] xl:pr-11 pt-4 xl:pt-9 pb-4">
     <div className="shrink-0 w-full md:w-auto mr-0 lg:mr-9">
@@ -61,7 +69,7 @@ const Details = () => {
       <div className="flex flex-col lg:flex-row lg:h-[94px] py-2 px-5 lg:px-0 mb-8 bg-lightdark rounded-[14.5px]">
         <div className="flex flex-col lg:pl-6 lg:pr-11 py-2 lg:border-r border-lightdark-border">
           <span className="font-semibold text-[13.64px] mb-[9px]">Uptime</span>
-          <span className="font-semibold text-base text-transparent bg-clip-text bg-yellow-text">{Math.floor(device.uptimeMinutes / 60) == 0 ? '' : Math.floor(device.uptimeMinutes / 60) + 'H'} {device.uptimeMinutes % 60 == 0 ? '' : device.uptimeMinutes % 60}</span>
+          <span className="font-semibold text-base text-transparent bg-clip-text bg-yellow-text">{Math.floor(device.uptimeMinutes / 60) === 0 ? '' : Math.floor(device.uptimeMinutes / 60) + 'H'} {device.uptimeMinutes % 60 === 0 ? '' : device.uptimeMinutes % 60}</span>
         </div>
         <div className="flex flex-col lg:pl-[33px] lg:pr-[39px] py-2 lg:border-r border-lightdark-border">
           <span className="font-semibold text-[13.64px] mb-[9px]">Last Update</span>
@@ -77,7 +85,7 @@ const Details = () => {
           </div>
         </div>
         <div className="flex flex-col lg:pl-10 lg:pr-[55px] py-2">
-          <span className="font-semibold text-[13.64px] mb-[9px]">Number of Active Devices</span>
+          <span className="font-semibold text-[13.64px] mb-[9px]">Devices</span>
           <div className="flex">
             <div className="mr-[30px]">
               <p className="font-normal text-lightdark-font text-[11.41px] mb-[1px]">GPS</p>

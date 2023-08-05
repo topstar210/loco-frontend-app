@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import Logo from '../../assets/images/logo.png';
+import { toast } from 'react-toastify';
+
 import ProvectusLogo from '../../assets/images/provectus_logo.svg';
 import API from '../../API';
+// import Logo from '../../assets/images/logo.png';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,6 +13,7 @@ const Login = () => {
     password: '123'
   });
 
+  // handling input change events
   const handleChange = e => {
     const target = e.target;
     setData(prev => ({ ...prev, [target.name]: target.value }));
@@ -18,14 +21,35 @@ const Login = () => {
 
   // when click the login button
   const handleLogin = () => {
+    if(validateForm()) return;
     localStorage.removeItem('access_token');
     API.auth.login(data).then(res => {
       if (res.data.user !== undefined) {
         localStorage.setItem('access_token', res.data.token);
         navigate('/device/details');
       }
-    });
+    }).catch((err) => {
+      toast.warning(err.response?.data.message);
+    })
   }
+
+  // validation
+  const validateForm = () => {
+    if(data.email === "") {
+      toast.warn('Email is required'); return true;
+    } else if(data.password === "") {
+      toast.warn('Password is required'); return true;
+    }
+    if(!validateEmail(data.email)){
+      toast.warn('Email is invalid'); return true;
+    }
+  }
+  // email validation
+  const validateEmail = (email) => {
+    return email.match(
+      /\S+@\S+\.\S+/
+    );
+  };
 
   return <>
     <div className="flex h-screen">
@@ -34,7 +58,7 @@ const Login = () => {
           {/* <img src={Logo} className="mx-auto mb-20" alt="logo" /> */}
           <h1 className="text-4xl font-bold my-4">Welcome Back!</h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-          <img src={ProvectusLogo} className="mt-56" alt="logo" />
+          <img src={ProvectusLogo} className="mx-auto mt-56" width={200} alt="logo" />
         </div>
       </div>
       <div className="w-full h-full md:w-7/12 sm:px-2 md:px-10">
@@ -73,7 +97,7 @@ const Login = () => {
             </div>
           </div>
           <div className="absolute w-full bottom-10">
-            <p className="text-[12.6px] text-center md:text-right md:mr-20">Don't have an account? <a href="#" className="text-yellow-300">Get started</a></p>
+            <p className="text-[12.6px] text-center md:text-right md:mr-20">Don't have an account? <span className="text-yellow-300">Get started</span></p>
           </div>
         </div>
       </div>
