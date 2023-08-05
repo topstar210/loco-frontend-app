@@ -13,11 +13,11 @@ const DeviceCard = props => {
         <div className="text-sm font-semibold pt-4 pb-3">Last Update</div>
         <div className="flex">
             <div className="w-1/2">
-                <div className="opacity-30 text-[11.41px]">Date</div>
+                {/* <div className="opacity-30 text-[11.41px]">Date</div> */}
                 <div className="text-yellow-500 text-sm">{ ddate }</div>
             </div>
             <div className="w-1/2">
-                <div className="opacity-30 text-[11.41px]">Date</div>
+                {/* <div className="opacity-30 text-[11.41px]">time</div> */}
                 <div className="text-yellow-500 text-sm">{ dtime }</div>
             </div>
         </div>
