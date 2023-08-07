@@ -12,7 +12,7 @@ const Profile = () => {
             const data = res.data;
             setUserInfo(data)
         })
-    }, []);
+    }, [userData]);
 
     return <div>
         <div className="flex mb-4">

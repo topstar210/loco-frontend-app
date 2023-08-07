@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://ec2-18-116-89-188.us-east-2.compute.amazonaws.com/"
+  baseURL: process.env.REACT_APP_BACKEND
 });
 
 API.interceptors.request.use(config => {
@@ -14,9 +14,11 @@ API.interceptors.response.use(
   response => response,
   error => {
     console.error(error);
-    window.location.href = '/login';
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('user_id');
+    if(error.config.url !== "/users/login"){
+      window.location.href = '/login';
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('user_id');
+    }
     // Handle error here
     return Promise.reject(error);
   }

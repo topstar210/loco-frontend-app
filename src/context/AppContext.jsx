@@ -19,7 +19,7 @@ const AppContext = ({ children }) => {
     // set userdata from api when window reload
     useEffect(()=>{
         const userId = localStorage.getItem("user_id");
-        API.user.personalInfo(userId).then(res => {
+        userId && API.user.personalInfo(userId).then(res => {
             const data = res.data;
             setUserData(data)
         })
