@@ -1,4 +1,5 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
+import API from "../API";
 
 export const AppProvider = createContext();
 
@@ -7,18 +8,28 @@ export const useToggle = () => {
 };
 
 const AppContext = ({ children }) => {
-    const [isLogin, setisLogin] = useState(false);
+    const [userData, setUserData] = useState({});
 
     // Login Status
-    const handleLogin = () => {
-        setisLogin(!isLogin);
+    const setUserInfo = (data) => {
+        setUserData(data);
+        localStorage.setItem('user_id', data.uuid);
     };
+
+    // set userdata from api when window reload
+    useEffect(()=>{
+        const userId = localStorage.getItem("user_id");
+        API.user.personalInfo(userId).then(res => {
+            const data = res.data;
+            setUserData(data)
+        })
+    }, [])
 
     return (
         <AppProvider.Provider
             value={{
-                handleLogin,
-                isLogin,
+                setUserInfo,
+                userData,
             }}>
             {children}
         </AppProvider.Provider>

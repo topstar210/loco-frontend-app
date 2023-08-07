@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react"
 import API from '../../API';
+import { useToggle } from "../../context/AppContext";
 
 const Profile = () => {
+    const { userData } = useToggle();
     const [userInfo, setUserInfo] = useState({});
 
     // getting initial data
     useEffect(() => {
-        API.user.personalInfo('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx2').then(res => {
+        API.user.personalInfo(userData?.uuid).then(res => {
             const data = res.data;
             setUserInfo(data)
         })

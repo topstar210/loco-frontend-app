@@ -15,6 +15,8 @@ API.interceptors.response.use(
   error => {
     console.error(error);
     window.location.href = '/login';
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('user_id');
     // Handle error here
     return Promise.reject(error);
   }

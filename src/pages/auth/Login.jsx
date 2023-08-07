@@ -2,12 +2,14 @@ import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import ProvectusLogo from '../../assets/images/provectus_logo.svg';
+import { useToggle } from "../../context/AppContext";
 import API from '../../API';
+import ProvectusLogo from '../../assets/images/provectus_logo.svg';
 // import Logo from '../../assets/images/logo.png';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setUserInfo } = useToggle();
   const [data, setData] = useState({
     email: '',
     password: ''
@@ -25,7 +27,8 @@ const Login = () => {
     localStorage.removeItem('access_token');
     API.auth.login(data).then(res => {
       if (res.data.user !== undefined) {
-        localStorage.setItem('access_token', res.data.token);
+        setUserInfo(res.data?.user || {});
+        localStorage.setItem('access_token', res.data?.token);
         navigate('/device/details');
       }
     }).catch((err) => {
