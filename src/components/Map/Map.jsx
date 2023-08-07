@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import GoogleMap from 'google-map-react';
 
-import Marker from "./Marker";
-
 let googleMap, googleMaps;
 
 const Map = ({ gpsPoints }) => {
     const [center, setCenter] = useState({});
     const [polyline, setPolyline] = useState(null);
 
-    const handleGoogleMapApi = (map, maps, path) => {
+    const handleGoogleMapApi = (map, maps, points) => {
         // console.log("gpsPoints", path)
         googleMap = map;
         googleMaps = maps;
@@ -17,7 +15,7 @@ const Map = ({ gpsPoints }) => {
             polyline.setMap();
         }
         const trainPath = new maps.Polyline({
-            path: path,
+            path: points,
             geodesic: true,
             strokeColor: '#FF0000',
             strokeOpacity: 1.0,
@@ -25,13 +23,22 @@ const Map = ({ gpsPoints }) => {
         });
         setPolyline(trainPath);
         trainPath.setMap(map);
+
+        // adding marker
+        points.map(latLng=>(
+            new maps.Marker({
+                position: latLng,
+                map,
+            })
+        ))
     };
 
-    useEffect(()=>{
-        if(googleMap && googleMaps){
+    useEffect(() => {
+        if (googleMap && googleMaps) {
             handleGoogleMapApi(googleMap, googleMaps, gpsPoints)
         }
-    },[gpsPoints])
+        // eslint-disable-next-line
+    }, [gpsPoints])
 
     // calc center of map by gps points
     const getCenter = (gpsPoints) => {
@@ -64,14 +71,6 @@ const Map = ({ gpsPoints }) => {
                 yesIWantToUseGoogleMapApiInternals
                 onGoogleApiLoaded={({ map, maps }) => handleGoogleMapApi(map, maps, gpsPoints)}
             >
-                {gpsPoints.map((coords, index) => (
-                    <Marker
-                        key={index}
-                        lat={coords.lat}
-                        lng={coords.lng}
-                        name={index}
-                    />
-                ))}
             </GoogleMap>
         </div>
     );

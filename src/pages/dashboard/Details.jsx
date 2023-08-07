@@ -41,10 +41,7 @@ const Details = () => {
         id = res.data.items[0]['uuid'];
       }
       await API.devices.show(id).then(response => {
-        setDevice({
-          ...device,
-          ...response.data
-        });
+        setDevice(response.data);
       });
       await API.devices.deviceUpdate(id).then(response => {
         const gps = response.data.items.map(item => ({
@@ -52,12 +49,12 @@ const Details = () => {
           lng: item.gps.lon
         }))
         // console.log(gps)
-        // [
-        //   {lat: 47.55, lng: 97.33},
-        //   {lat: 47.705349999999996, lng: 97.48535},    
-        //   {lat: 47.860699999999994, lng: 97.6407}
-        // ]
-        setGpsPoints(gps);
+        setGpsPoints(gps)
+        // setGpsPoints([
+        //   {lat: 55.798917, lng: 49.098306},
+        //   {lat: 55.796961141764555, lng: 49.100584536767656},
+        //   {lat: 55.794066168064774, lng: 49.0934605896241}
+        // ]);
       });
     }
     fetchdata();
