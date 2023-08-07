@@ -1,14 +1,15 @@
 import React, {useState, useEffect} from "react";
+import { useParams } from "react-router-dom";
+
+import Map from "../../components/Map/Map";
 import Status from "../../components/Status";
+import { formatDate } from "../../utils";
+import API from '../../API';
+
 import MonitorIcon from "../../assets/images/monitor.svg";
 import MicroIcon from "../../assets/images/micro.svg";
 import LocationIcon from "../../assets/images/location.svg";
 import CameraIcon from "../../assets/images/camera.svg";
-import { formatDate } from "../../utils";
-import API from '../../API';
-
-import { useParams } from "react-router-dom";
-// import { Map } from '@googlemaps/react-wrapper'
 
 const Details = () => {
   const { deviceId } = useParams();
@@ -23,14 +24,11 @@ const Details = () => {
       "gps",
       "mic"
     ],
-    "gps": {
-      "lat": 47.55,
-      "lon": 97.33
-    },
     "name": "Loco Cam 1",
     "lastUpdateTimestamp": "2023-08-03T04:57:40.901000",
     "uptimeMinutes": 36000
   });
+  const [gpsPoints, setGpsPoints] = useState([]);
 
   // load first data
   useEffect(() => {
@@ -42,12 +40,25 @@ const Details = () => {
         const res = await API.devices.all();
         id = res.data.items[0]['uuid'];
       }
-      API.devices.show(id).then(response => {
-        setDevice(response.data);
+      await API.devices.show(id).then(response => {
+        setDevice({
+          ...device,
+          ...response.data
+        });
       });
-      // API.devices.deviceUpdate(id).then(response => {
-      //   setDevice(response.data);
-      // });
+      await API.devices.deviceUpdate(id).then(response => {
+        const gps = response.data.items.map(item => ({
+          lat: item.gps.lat,
+          lng: item.gps.lon
+        }))
+        // console.log(gps)
+        // [
+        //   {lat: 47.55, lng: 97.33},
+        //   {lat: 47.705349999999996, lng: 97.48535},    
+        //   {lat: 47.860699999999994, lng: 97.6407}
+        // ]
+        setGpsPoints(gps);
+      });
     }
     fetchdata();
   }, [deviceId]);
@@ -110,7 +121,7 @@ const Details = () => {
       </div>
     </div>
     <div className="mt-6 xl:mt-[6px] w-full p-[10px] aspect-video rounded-[18.1px] bg-lightdark lg:max-w-[709px]">
-      {/* <Map apiKey="Your_Api_key" /> */}
+      <Map gpsPoints={gpsPoints} />
     </div>
   </div>
 }
